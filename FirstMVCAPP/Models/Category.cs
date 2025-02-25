@@ -6,8 +6,9 @@ namespace FirstMVCAPP.Models
     {
         [Key]
         public int Id { get; set; }
-        
-        [Required]
+
+        [Required(ErrorMessage = "Category Name is required")]
+        [MinLength(2, ErrorMessage = "Category Name must have 2 or more character")]
         public string Name { get; set; }
 
         public int DisplayOrder { get; set; }

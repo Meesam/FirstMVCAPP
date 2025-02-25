@@ -1,15 +1,22 @@
 ﻿@model Category
 
-<form>
+<form method="post">
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Category Name</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <label for="categoryName" class="form-label">Category Name</label>
+        <input type="text" asp-for="Name" class="form-control" id="categoryName" aria-describedby="CategoryName">
+        <span asp-validation-for="Name" class="text-danger small"></span>
         
     </div>
     <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Display Order</label>
-        <input type="text" class="form-control" id="exampleInputPassword1">
+        <label for="displayOrder" class="form-label">Display Order</label>
+        <input asp-for="DisplayOrder" class="form-control" id="displayOrder">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 
