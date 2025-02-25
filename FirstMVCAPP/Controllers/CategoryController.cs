@@ -1,5 +1,6 @@
 ﻿using FirstMVCAPP.Data;
 using FirstMVCAPP.Models;
+using FirstMVCAPP.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,28 @@ namespace FirstMVCAPP.Controllers
         public IActionResult Index()
         {
             List<Category> categories = _dbContext.Categories.ToList();
-            return View(categories);
+            CategoryViewModel categoryViewModel = new CategoryViewModel();
+            categoryViewModel.Categories = categories;
+
+            return View(categoryViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Index(CategoryViewModel categoryViewModel)
+        {
+            var key = categoryViewModel.SearchKey != null ? categoryViewModel.SearchKey : "";
+            if (key != "")
+            {
+                List<Category> categories = _dbContext.Categories.Where(x => x.Name.Contains(key)).ToList();
+                CategoryViewModel _categoryViewModel = new CategoryViewModel();
+                _categoryViewModel.Categories = categories;
+                return View(_categoryViewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
         }
 
         public IActionResult AddCategory(int Id)
